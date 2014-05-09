@@ -1,0 +1,188 @@
+#!/usr/bin/env node
+
+// 'use strict'
+
+var fs = require('fs');
+var http = require('http');
+var request = require('request');
+var unzip = require('unzip');
+
+var exec = require('child_process').exec;
+var child;
+
+var path = 'app/library';
+var url = 'http://107.170.77.172/pkg.json';
+
+// if (fs.existsSync(path)) {
+//     // Do something
+//     console.log('exist');
+// }
+
+// // Or
+
+// fs.exists(path, function(exists) {
+//     if (exists) {
+//         console.log(exists);
+//     }
+// });
+
+// var file = fs.createWriteStream("crypt.php");
+// var request = http.get("http://pastebin.com/raw.php?i=QfNGT1sw", function(response) {
+//   response.pipe(file);
+// });
+var ppm;
+
+var error = function(num){
+	switch(num){
+		case 0:
+			console.log('| (• ◡•)| <( NOPE!, the parameter does not exist! )');
+		break;
+		
+		case 1:
+			console.log('install "something", check the list with "ppm list"');
+		break;
+
+		case 2:
+			console.log('library was not found');
+		break;
+	}
+}
+
+var view = {
+	install : function(name,author){
+		console.log('----------------');
+		console.log('Name: '+name);
+		console.log('Version: '+author);
+		console.log('Author: '+author);
+		console.log('----------------');
+		console.log('Installing');
+		console.log('----------------');
+	},
+	complete : function(){
+		console.log('Complete!');
+	},
+	line : function(){
+		console.log('----------------');
+	},
+	rename : function(){
+		console.log('----------------');
+		console.log('Move and Rename');
+		console.log('----------------');
+	}
+}
+
+var deleteFolderRecursive = function(path) {
+    var files = [];
+    if( fs.existsSync(path) ) {
+        files = fs.readdirSync(path);
+        files.forEach(function(file,index){
+            var curPath = path + "/" + file;
+            if(fs.lstatSync(curPath).isDirectory()) { // recurse
+                deleteFolderRecursive(curPath);
+            } else { // delete file
+                fs.unlinkSync(curPath);
+            }
+        });
+        fs.rmdirSync(path);
+    }
+};
+
+if(process.argv[2]!==undefined){
+switch(process.argv[2]){
+case 'install':
+	if(process.argv[3]===undefined){
+		// Error 1
+		error(1);
+	}else{
+		var req = http.request(url, function(res) {
+		  res.setEncoding('utf8');
+		  res.on('data', function (data) {
+		       var jsonObject = JSON.parse(data);
+		       var check = 0;
+		       	jsonObject.pkg.forEach(function(item) {
+		       		if(item.name===process.argv[3]){
+		       			check = 1;
+		       			view.install(item.name,item.author);
+
+					request(item.src)
+					  .pipe(fs.createWriteStream('pkg.zip'))
+					  .on('close', function () {
+					   var nf;
+
+					   fs.createReadStream('pkg.zip')
+						  .pipe(unzip.Parse())
+						  .on('entry', function (entry) {
+						    var fileName = entry.path;
+						    var type = entry.type; // 'Directory' or 'File'
+						    var size = entry.size;
+						    console.log('=> '+fileName);
+						    nf = fileName;
+						      entry.autodrain();
+						  })
+						  .on('close',function(){
+						  	var n = nf.split('/');
+							var nn = n[0].split('-');
+							
+							fs.createReadStream('pkg.zip').pipe(unzip.Extract({ path: 'app/library/' })).on('close',function(){
+							    fs.unlink('pkg.zip');
+							    fs.rename('app/library/'+n[0], 'app/library/'+nn[0], function (err) {
+									view.line();
+									view.complete();
+									view.line();
+								});
+							});
+
+					
+						  })
+
+					  });
+
+		       		}
+				});
+
+		       	if(check===0){error(2);}
+		  });
+		});
+		req.end();
+	}
+break;
+
+case 'list':
+	var req = http.request(url, function(res) {
+	  res.setEncoding('utf8');
+	  res.on('data', function (data) {
+	       var jsonObject = JSON.parse(data);
+			jsonObject.pkg.forEach(function(item) {
+				console.log('+ '+item.name);
+			});
+	  });
+	});
+	req.end();
+break;
+
+case 'update':
+	child = exec("git clone git@github.com:DIMTEC/dPlayer.git", function (error, stdout, stderr) {
+	  if (error !== null) {
+	    console.log('exec error: ' + error);
+	  }else{
+	  	console.log(stdout);
+	  }
+	});
+break;
+
+case 'uninstall':
+break;
+
+default:
+	// Error 0, no params
+	error(0);
+break;
+}
+}
+
+
+
+// req.on('error', function(e) {
+//   console.log('problem with request: ' + e.message);
+// });
+
