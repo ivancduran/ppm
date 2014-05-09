@@ -1,11 +1,12 @@
 Phalcon Package Manager
--------------
+==================
 
 This is a cool program to install libraries in Phalcon Php
 
 
 Installation
-==================
+-------------
+
 To install
 
     npm -g install phalcon-pm
