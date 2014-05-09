@@ -1,25 +1,25 @@
 {
-  "name": "ppm",
+  "name": "phalcon-pm",
   "author": {
     "name"  : "Ivan Coronado",
     "email" : "ivan.cduran@gmail.com",
     "url"   : "http://ivancduran.com/"
   },
   "description": "Phalcon Package Manager",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "url": "https://github.com/ivancduran/ppm"
   },
-  "main": "./lib/ppm",
+  "main": "./lib/phalcon-pm",
   "keywords": [
     "CLI",
     "Phalcon",
     "Php",
     "Libraries",
-    "ppm"
+    "phalcon-pm"
   ],
   "bin": {
-    "ppm": "./bin/ppm"
+    "ppm": "./bin/phalcon-pm"
   },
   "dependencies" : {
           "request" : "*",
