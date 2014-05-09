@@ -16,7 +16,8 @@
     "Phalcon",
     "Php",
     "Libraries",
-    "phalcon-pm"
+    "phalcon-pm",
+    "ppm"
   ],
   "bin": {
     "ppm": "./bin/phalcon-pm"
