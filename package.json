@@ -22,10 +22,6 @@
   "bin": {
     "ppm": "./bin/phalcon-pm"
   },
-  "dependencies" : {
-          "request" : "*",
-          "unzip"   : "*"
-            },
   "engines": {
     "node": "*"
   },
