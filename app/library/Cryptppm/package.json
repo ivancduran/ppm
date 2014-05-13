@@ -1,0 +1,12 @@
+{
+  "name": "Crypt AES 256",
+  "version": "0.5.0",
+  "main": "Crypt.php",
+  "description": "Encrypt and descrypt menssages with AES 256bits",
+  "author": "@ivancduran",
+  "license": {
+    "type": "MIT",
+    "url": ""
+  },
+  "repository": "git@github.com:ivancduran/Cryptppm.git"
+}

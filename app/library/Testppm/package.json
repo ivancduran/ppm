@@ -1,0 +1,12 @@
+{
+  "name": "PPM Test",
+  "version": "0.0.1",
+  "main": "Test.php",
+  "description": "Package test for ppm",
+  "author": "@ivancduran",
+  "license": {
+    "type": "MIT",
+    "url": ""
+  },
+  "repository": "git@github.com:ivancduran/Testppm.git"
+}
