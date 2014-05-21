@@ -11,6 +11,10 @@
         {
             "name": "gravatar",
             "src": "https://github.com/ivancduran/gravatarppm"
+        },
+        {
+            "name": "translate",
+            "src": "https://github.com/ivancduran/translateppm"
         }
     ]
 }
