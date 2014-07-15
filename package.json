@@ -6,7 +6,7 @@
     "url"   : "http://ivancduran.com/"
   },
   "description": "Phalcon Package Manager",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "repository": {
     "url": "https://github.com/ivancduran/ppm"
   },
@@ -24,6 +24,9 @@
   },
   "engines": {
     "node": "*"
+  },
+  "dependencies": {
+    "colors": "*"
   },
   "license" : "BSD"
 }
